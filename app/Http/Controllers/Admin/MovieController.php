@@ -12,7 +12,6 @@ class MovieController extends Controller
     public function index()
     {
         $movies = Movie::paginate(config('view.default_pagination'));
-
         $data = [
             'movies' => $movies,
         ];

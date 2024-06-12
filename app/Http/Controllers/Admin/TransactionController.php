@@ -9,13 +9,14 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Models\Movie;
 use App\Models\WalletTopUp;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\View;
 class TransactionController extends Controller
 {
     /**
@@ -40,5 +41,17 @@ class TransactionController extends Controller
         ];
 
         return view('admin.transaction.index', $data);
+    }
+    public function showMovies()
+    {
+        $movies = Movie::withCount('orders')->get();
+        $totalRevenue = 0;
+
+        foreach ($movies as $movie) {
+            $totalRevenue += $movie->orders_count * $movie->price;
+        }
+    
+        View::share('totalRevenue', $totalRevenue);
+        return view('admin.transaction.statics', compact('movies'));
     }
 }

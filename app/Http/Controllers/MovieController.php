@@ -59,7 +59,7 @@ class MovieController extends Controller
     public function show(int $id)
     {
         $movie = Movie::find($id);
-
+        
         $data = [
             'movie' => $movie,
         ];
@@ -118,8 +118,10 @@ class MovieController extends Controller
     public function watch(int $id)
     {
         $movie = Movie::find($id);
-
+        
+        // Kiểm tra xem phim có giá không
         if (!empty($movie->price)) {
+            // Nếu có kiểm tra đăng nhập hay chưa
             if (Auth::guard('web')->check()) {
                 $checkMyMovie = Auth::guard('web')->user()->checkMyMovie($id);
                 $error = 'Bạn chưa mua phim này. Vui lòng mua phim để xem.';
@@ -127,7 +129,7 @@ class MovieController extends Controller
                 $checkMyMovie = false;
                 $error = 'Bạn chưa mua phim này. Vui lòng đăng nhập để mua phim.';
             }
-
+            // Nếu chưa mua phim thì trả về trang chi tiết phim tương ứng
             if (!$checkMyMovie) {
                 request()->session()->flash('error', $error);
                 return redirect()->route('web.movie-detail', ['id' => $id]);
@@ -146,17 +148,20 @@ class MovieController extends Controller
      */
     public function like(int $id)
     {
+        // kiểm tra phim xem đc yêu thích chưa
         $checkExists = Favorite::where([
             'movie_id' => $id,
             'customer_id' => Auth::guard('web')->id(),
         ])->exists();
-
+            // Nếu rồi thì xóa
         if ($checkExists) {
             Favorite::where([
                 'movie_id' => $id,
                 'customer_id' => Auth::guard('web')->id(),
             ])->delete();
-        } else {
+        } 
+            // Nếu chưa thì thêm
+        else {
             Favorite::create([
                 'movie_id' => $id,
                 'customer_id' => Auth::guard('web')->id(),
@@ -192,6 +197,7 @@ class MovieController extends Controller
         $movie = Movie::find($id);
         $customer = Auth::guard('web')->user();
 
+        // Kiểm tra số dư trong ví còn không
         if ($customer->wallet->balance < $movie->price) {
             request()->session()->flash('error', 'Số dư trong ví không đủ để mua phim này.');
             return redirect()->route('web.movie-detail', ['id' => $id]);
@@ -199,22 +205,23 @@ class MovieController extends Controller
 
         // start transaction to update wallet and create order
         DB::transaction(function () use ($movie, $customer) {
+            // Tạo 1 charge_id để nhận số tiền đã trừ của người dùng
             $charge_id = $customer->wallet->charges()->create([
                 'amount' => $movie->price,
             ]);
-
+            // Tạp 1 oder mới để  nhận đơn hàng
             $customer->orders()->create([
                 'movie_id' => $movie->id,
                 'wallet_charge_id' => $charge_id->id,
             ]);
-
+            // Trừ tiền trong ví của người dùng và lưu số mới lại
             $customer->wallet->balance -= $movie->price;
             $customer->wallet->save();
         });
 
-
+        // Thông báo thành công
         request()->session()->flash('success', 'Mua phim thành công.');
-
+        // Về trang mô tả phim tương ứng
         return redirect()->route('web.movie-detail', ['id' => $id]);
     }
 }

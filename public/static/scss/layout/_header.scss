@@ -80,6 +80,7 @@ $margin-main: 32px;
 .top-list.top-list-user li:hover ul {
     display: flex;
     flex-direction: column;
+    left: -35px;
 }
 
 .top-list ul {

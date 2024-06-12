@@ -14,6 +14,7 @@ class Movie extends Model
         'description',
         'image',
         'video',
+        'backdrop',
         'trending',
         'price',
         'point',
@@ -30,5 +31,20 @@ class Movie extends Model
     public function nation(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Nation::class);
+    }
+    public function favorites() {
+        return $this->hasMany(Favorite::class);
+    }
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
+    public function getPurchaseCountAttribute()
+    {
+        return $this->orders()->count();
+    }
+
+    public function getPriceLabelAttribute()
+    {
+        return $this->price == 0 ? 'Miễn phí' : $this->price;
     }
 }

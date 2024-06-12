@@ -20,4 +20,5 @@ class WalletTopUp extends Model
     {
         return $this->belongsTo(Wallet::class);
     }
+    
 }

@@ -40,7 +40,7 @@ class AuthLoginController extends Controller
 
             return redirect('/');
         } catch (Exception $e) {
-            return redirect()->route('login')->withErrors('Failed to login with Google.');
+            return redirect()->route('pages.login')->withErrors('Failed to login with Google.');
         }
     }
 

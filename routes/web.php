@@ -33,6 +33,8 @@ Route::prefix('admin')->group(function () {
         Route::resource('movies', AdminMovieController::class);
 
         Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+        Route::get('/transaction/statics', [TransactionController::class, 'showMovies'])->name('transactions.statics');
+
     });
     require __DIR__.'/auth.php';
 });

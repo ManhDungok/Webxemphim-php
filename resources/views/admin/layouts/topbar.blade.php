@@ -3,7 +3,7 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="#" class="logo logo-dark">
+                <a href="{{route('web.home')}}" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="{{ url('/static/assets/icons/logo.svg') }}" alt="" height="22">
                     </span>
@@ -11,7 +11,7 @@
                         <img src="{{ url('/static/assets/icons/logo.svg') }}" alt="" height="17">
                     </span>
                 </a>
-                <a href="#" class="logo logo-light">
+                <a href="{{route('web.home')}}" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="{{ url('/static/assets/icons/logo.svg') }}" alt="" height="22">
                     </span>
@@ -33,14 +33,17 @@
                     <img class="rounded-circle header-profile-user"
                         src="{{ isset(Auth::user()->avatar) ? asset(Auth::user()->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
                         alt="Header Avatar">
-                    <span class="d-none d-xl-inline-block ms-1"
-                        key="t-henry">{{ ucfirst(Auth::user()->name) }}</span>
+                    <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ ucfirst(Auth::user()->name) }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="{{ route('users.show', auth()->id()) }}"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Thông tin cá nhân</span></a>
-                    <a class="dropdown-item d-block" href="{{ route('users.view-change-password', auth()->id()) }}"><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">Đổi mật khẩu</span></a>
+                    <a class="dropdown-item" href="{{ route('users.show', auth()->id()) }}"><i
+                            class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Thông tin cá
+                            nhân</span></a>
+                    <a class="dropdown-item d-block" href="{{ route('users.view-change-password', auth()->id()) }}"><i
+                            class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">Đổi mật
+                            khẩu</span></a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="javascript:void();"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
