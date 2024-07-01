@@ -7,6 +7,7 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    //Thể loại và phân trang
     public function index()
     {
         $categories = Category::paginate(config('view.default_pagination'));
@@ -18,11 +19,13 @@ class CategoryController extends Controller
         return view('admin.categories.index', $data);
     }
 
+    //Thêm thể loại
     public function create()
     {
         return view('admin.categories.create');
     }
 
+    //Thêm mới thể loại vào csdl
     public function store()
     {
         $category = new Category();
@@ -32,6 +35,7 @@ class CategoryController extends Controller
         return redirect()->route('categories.index');
     }
 
+    //Show thể loại của 1 phim
     public function show($id)
     {
         $category = Category::find($id);

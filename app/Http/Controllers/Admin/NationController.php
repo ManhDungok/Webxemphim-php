@@ -11,6 +11,7 @@ class NationController extends Controller
     /**
      * Display a listing of the resource.
      */
+    //Dsach quốc gia
     public function index()
     {
         $nations = Nation::paginate(config('view.default_pagination'));

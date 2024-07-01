@@ -27,7 +27,7 @@ class WalletController extends Controller
      * @return Renderable
      */
     public function show(): Renderable
-    {   
+    {
         // Lấy thông tin ví của người dùng
         $wallet = Auth::guard('web')->user()->wallet;
 
@@ -52,7 +52,7 @@ class WalletController extends Controller
         $top_up = new WalletTopUp();
         $top_up->wallet_id = $wallet->id;
         $top_up->amount = $amount;
-        $top_up->deadline = now()->addMinutes(15);
+        $top_up->deadline = now()->addMinutes(15); //15p
         $top_up->save();
 
         // tạo url thanh toán và chuyển hướng người dùng
@@ -76,12 +76,14 @@ class WalletController extends Controller
     }
 
     public function vnpay_return()
-    {   
+    {
         // Lấy các tham số vnpay gửi về khi hoàn tất gd
         $vnp_SecureHash = $_GET['vnp_SecureHash'];
 
         // Nhập tất cả các tham số bắt đầu bằng vnp_
         $inputData = array();
+
+        //bắt đầu từ vị trí 0 và có độ dài 4 ký tự. Do đó, nó kiểm tra xem phần bắt đầu của chuỗi khóa có phải là "vnp_" không.
         foreach ($_GET as $key => $value) {
             if (substr($key, 0, 4) == "vnp_") {
                 $inputData[$key] = $value;
@@ -138,7 +140,7 @@ class WalletController extends Controller
         $vnp_SecureHash = $inputData['vnp_SecureHash'];
         unset($inputData['vnp_SecureHash']);
         // Sắp xếp các tham số và tạo 1 chuỗi dữ liệu từ các tham số với các keyvalue được nối với nhau = &
-        
+
         ksort($inputData);
         $i = 0;
         $hashData = "";
@@ -225,7 +227,7 @@ class WalletController extends Controller
      * @return string
      */
     public function generate_payment_url(mixed $amount, WalletTopUp $top_up): string
-    {   
+    {
         // Khởi tạo biến
         $vnp_Amount = $amount;
         $vnp_Locale = 'vn';
@@ -272,7 +274,7 @@ class WalletController extends Controller
         // Tạo url thanh toán
         $vnp_Url = config('vnpay.vnp_Url') . "?" . $query;
         if (isset($vnp_HashSecret)) {
-            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
+            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret); //
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
 

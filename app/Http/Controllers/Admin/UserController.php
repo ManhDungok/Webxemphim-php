@@ -21,12 +21,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //hiển thị danh sách khách hàng trong giao diện quản trị
     public function index(Request $request)
     {
         $users = Customer::paginate(config('view.default_pagination'));
 
-        if ($request->search) {
-            $users = Customer::where('name', 'like', '%'.$request->search.'%')->paginate(config('view.default_pagination'));
+        if ($request->search) { //Nếu có yêu cầu tìm kiếm thì tìm kiếm tên khách hàng
+            // '%''%' đảm bảo rằng chuỗi tìm kiếm có thể xuất hiện ở bất kỳ vị trí nào trong tên khách hàng.
+            $users = Customer::where('name', 'like', '%' . $request->search . '%')->paginate(config('view.default_pagination'));
+            //Khi người dùng chuyển sang các trang phân trang khác, các tham số này được giữ nguyên trong URL để giữ lại KQ tìm kiếm và phân trang
             $users->appends(['search' => $request->search]);
         }
 

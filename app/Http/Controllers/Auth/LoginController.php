@@ -34,6 +34,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        //người k đăng nhập thì chỉ là khách
         $this->middleware('guest')->except('logout');
     }
 }

@@ -58,20 +58,27 @@ class AuthLoginController extends Controller
         return view('pages.login');
     }
 
-    // post login
+    // xử lý logic khi người dùng gửi yêu cầu đăng nhập
     public function store(Request $request): RedirectResponse
     {
-        if (! Auth::guard('web')->attempt($this->credentials($request))) {
+        //kiểm tra xem liệu người dùng có thể đăng nhập thành công hay không
+        //Nếu ko thì mã lỗi sẽ được đặt trong session và user sẽ được chuyển hướng trở lại trang trước đó với thông báo thất bại
+        if (!Auth::guard('web')->attempt($this->credentials($request))) {
             return redirect()->back()->with('error', 'Đăng nhập thất bại!');
         }
 
+        //Thành công
         return redirect()->intended('/');
     }
 
     // Login username hoặc email
     protected function credentials(Request $request)
     {
+        //Lấy gtri của trường login
         $login = $request->input('login');
+
+        //xem có phải là email hoặc username hợp lệ k
+        //nếu đúng, biến $field sẽ được thiết lập là 'email', ngược lại sẽ là 'username'.
         $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
         return [

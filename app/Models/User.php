@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Các thuộc tính có thể gán lại gtri (VD như cập nhật user)
      *
      * @var array<int, string>
      */

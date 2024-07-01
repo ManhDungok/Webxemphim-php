@@ -24,7 +24,7 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
-     * Where to redirect users after registration.
+     * Nơi chuyển hướng người dùng sau khi đăng ký.
      *
      * @var string
      */
@@ -40,6 +40,7 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    //xác thực dữ liệu người dùng trước khi lưu vào cơ sở dữ liệu
     protected function validator(array $data)
     {
         return Validator::make($data, [

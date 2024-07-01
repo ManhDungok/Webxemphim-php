@@ -17,7 +17,7 @@ Danh sách khách hàng
                     <div class="col-sm-3">
                         <div class="search-box mr-2 mb-2 d-inline-block">
                             <div class="position-relative">
-                                <input type="text" name="search" class="form-control" placeholder="Nhập họ và tên">
+                                <input type="text" name="search" class="form-control" placeholder="Nhập họ và tên...">
                                 <i class="bx bx-search-alt search-icon"></i>
                             </div>
                         </div>
@@ -25,7 +25,7 @@ Danh sách khách hàng
 
                     <div class="col-sm-3">
                         <button type="submit" class="btn btn-success waves-effect waves-light">
-                            <i class="bx bx-search-alt search-icon font-size-16 align-middle mr-2"></i> Search
+                            <i class="bx bx-search-alt search-icon font-size-16 align-middle mr-2"></i> Tim kiem
                         </button>
                     </div>
                 </form>

@@ -9,7 +9,7 @@
         <div class="primary-action">
             @if(empty($movie->price) || (auth()->guard('web')->check() &&
             auth()->guard('web')->user()->checkMyMovie($movie->id)))
-            <a href="{{ route('web.movie-watch', $movie->id) }}" class="btn btn-primary btn-lg">
+            <a href="{{ route('web.movie-watch', $movie->id) }}" class="red" backgro class="btn btn-primary btn-lg">
                 <h2>Xem phim</h2>
             </a>
             @else

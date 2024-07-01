@@ -36,9 +36,11 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
+        //liên kết đặt lại mật khẩu đã được gửi thành công. Mã sẽ quay trở lại trang trước đó với một thông báo thành công
+        //Nếu không thành công sẽ quay trở lại trang trước đó và hiển thị các lỗi tương ứng
         return $status == Password::RESET_LINK_SENT
-                    ? back()->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+            ? back()->with('status', __($status))
+            : back()->withInput($request->only('email')) //giữ lại giá trị email đã nhập 
+            ->withErrors(['email' => __($status)]);
     }
 }

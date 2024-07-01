@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+//lưu trữ thông tin về các mục yêu thích của người dùng
 class Favorite extends Model
 {
     protected $fillable = [

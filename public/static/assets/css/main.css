@@ -182,6 +182,11 @@ select {
   margin-top: 82px;
 }
 
+.red111 {
+  color: red;
+}
+
+
 @media (min-width: 1400px) {
   .container {
     --bs-gutter-x: 0;

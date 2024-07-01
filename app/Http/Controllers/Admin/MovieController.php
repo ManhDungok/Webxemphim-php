@@ -9,6 +9,7 @@ use App\Models\Nation;
 
 class MovieController extends Controller
 {
+    //Dsach phim
     public function index()
     {
         $movies = Movie::paginate(config('view.default_pagination'));
@@ -19,9 +20,12 @@ class MovieController extends Controller
         return view('admin.movies.index', $data);
     }
 
+    //Form tạo mới phim
     public function create()
     {
+        // Lấy tất cả các danh mục (categories) từ cơ sở dữ liệu
         $categories = Category::all();
+        // Lấy tất cả các quốc gia (nations) từ cơ sở dữ liệu
         $nations = Nation::all();
 
         $data = [
@@ -46,9 +50,9 @@ class MovieController extends Controller
         $movie->trending = request()->trending ?? 0;
         $movie->price = request()->price ?? 0;
         $movie->point = request()->point;
-        $movie->release_date = request()->release_date;
-        $movie->duration = request()->duration;
-        $movie->category_id = request()->category_id;
+        $movie->release_date = request()->release_date; //ngày phát hành
+        $movie->duration = request()->duration; //khoảng thời gian
+        $movie->category_id = request()->category_id; //Thể loại 
         $movie->nation_id = request()->nation_id;
         $movie->status = request()->status;
         $movie->save();
@@ -59,7 +63,7 @@ class MovieController extends Controller
     public function show($id)
     {
         $movie = Movie::find($id);
-        $categories = Category::all();
+        $categories = Category::all(); //Thể loại
         $nations = Nation::all();
 
         $data = [
@@ -86,14 +90,18 @@ class MovieController extends Controller
         return view('admin.movies.edit', $data);
     }
 
+    //Update phim
     public function update($id)
     {
         $movie = Movie::find($id);
         $movie->name = request()->name;
-        $movie->description = request()->description;
+        $movie->description = request()->description; // miêu tả
         $image = request()->file('image');
-        if ($image) {
+        if ($image) { //Nếu có ảnh thì:
             $hashed_image_name = $image->hashName();
+            //Dòng này lưu trữ tệp hình ảnh trong thư mục images dưới thư mục gốc public_uploads
+            //storeAs lưu tệp hình ảnh với tên đã được băm
+            //Đường dẫn của tệp hình ảnh được lưu trữ sẽ được gán cho thuộc tính image của đối tượng $movie.
             $movie->image = $image->storeAs('images', $hashed_image_name, 'public_uploads');
         }
         $video = request()->file('video');

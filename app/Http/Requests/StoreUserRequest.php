@@ -17,7 +17,7 @@ class StoreUserRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Nhận các quy tắc xác thực áp dụng cho yêu cầu.
      *
      * @return array
      */

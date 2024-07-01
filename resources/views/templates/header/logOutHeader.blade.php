@@ -26,6 +26,19 @@
                     @endforeach
                 </ul>
             </li>
+
+            {{-- <li>
+                <a class="top-link" href="#!">Thể loại 111</a>
+                <ul class="">
+                    @foreach ($categories as $category)
+                        <li>
+                            <a class="top-link"
+                               href="{{ route('web.movie-category', $category->id) }}">{{ $category->name }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </li> --}}
+
         </ul>
         <div class="top-act">
             <div class="top-act__group">

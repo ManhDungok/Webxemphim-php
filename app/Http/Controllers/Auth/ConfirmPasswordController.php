@@ -32,6 +32,7 @@ class ConfirmPasswordController extends Controller
      *
      * @return void
      */
+    //mọi phương thức trong controller sẽ yêu cầu người dùng phải xác thực trước khi truy cập vào chúng.
     public function __construct()
     {
         $this->middleware('auth');

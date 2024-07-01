@@ -39,6 +39,10 @@ select {
 .mt-header {
     margin-top: 82px;
 }
+.red {
+    color: red;
+}
+
 @media (min-width: 1400px) {
     .container {
         --bs-gutter-x: 0;

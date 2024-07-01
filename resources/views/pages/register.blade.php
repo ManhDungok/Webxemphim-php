@@ -48,7 +48,7 @@
 
         <!-- Liên kết Đăng nhập -->
         <p class="login__register">
-            I have an account ? <a href="{{ route('login') }}">Login</a>
+            I have an account ? <a href="{{ route('web.login') }}">Login</a>
         </p>
     </form>
 </div>

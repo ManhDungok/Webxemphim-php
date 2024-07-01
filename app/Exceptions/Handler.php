@@ -8,10 +8,11 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
     /**
-     * The list of the inputs that are never flashed to the session on validation exceptions.
-     *
+     * Danh sách các đầu vào không bao giờ được hiển thị trong phiên có ngoại lệ xác thực.     *
      * @var array<int, string>
      */
+    //là những trường thường chứa thông tin nhạy cảm, không nên bị lưu trữ lại trong 
+    //session để tránh rủi ro bảo mật.
     protected $dontFlash = [
         'current_password',
         'password',
@@ -19,8 +20,7 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Register the exception handling callbacks for the application.
-     */
+     * Đăng ký các cuộc gọi lại xử lý ngoại lệ cho ứng dụng.     */
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {

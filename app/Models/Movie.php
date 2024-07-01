@@ -9,6 +9,7 @@ class Movie extends Model
 {
     use HasFactory;
 
+    //mảng $fillable cho phép gán giá trị khi tạo mới hoặc cập nhật một đối tượng Movie.
     protected $fillable = [
         'name',
         'description',
@@ -32,10 +33,12 @@ class Movie extends Model
     {
         return $this->belongsTo(Nation::class);
     }
-    public function favorites() {
+    public function favorites()
+    {
         return $this->hasMany(Favorite::class);
     }
-    public function orders() {
+    public function orders()
+    {
         return $this->hasMany(Order::class);
     }
     public function getPurchaseCountAttribute()

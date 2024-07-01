@@ -2,7 +2,8 @@
     <div class="top-bar px-3 py-3">
         <ul class="top-list">
             <a href="{{route('web.home')}}" class="logo">
-                <img src="{{ asset('static/assets/icons/logo.svg') }}" alt="" class="logo__img">
+                {{-- <img src="{{ asset('static/assets/icons/logo.svg') }}" alt="" class="logo__img"> --}}
+                WEB XEM PHIM
             </a>
 
             <!-- Nav 1 -->
@@ -78,6 +79,19 @@
                     @endforeach
                 </ul>
             </li>
+
+            {{-- <li>
+                <a class="top-link" href="#!">Thể loại 123</a>
+                <ul class="">
+                    @foreach ($categories as $category)
+                        <li>
+                            <a class="top-link"
+                               href="{{ route('web.movie-category', $category->id) }}">{{ $category->name }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </li> --}}
+
         </ul>
         <div class="top-act">
             <div class="top-act__group">
@@ -99,7 +113,7 @@
 {{--                    <img src="{{ asset('static/assets/icons/bell.svg') }}" alt=""/>--}}
 {{--                </a>--}}
 
-                <h4>Số dư trong ví: {{number_format(auth()->guard('web')->user()->wallet->balance)}} VNĐ</h4>
+                <h4 >Số dư trong ví: {{number_format(auth()->guard('web')->user()->wallet->balance)}} VNĐ</h4>
 
                 <ul class="top-list top-list-user">
                     <li>

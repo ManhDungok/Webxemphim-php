@@ -25,7 +25,7 @@
                         </div>
                         <div class="primary-action mb-4">
                             @if(empty($movie->price) || (auth()->guard('web')->check() && auth()->guard('web')->user()->checkMyMovie($movie->id)))
-                                <a href="{{ route('web.movie-watch', $movie->id) }}" class="btn btn-primary btn-lg"><h2>Xem phim</h2></a>
+                                <a href="{{ route('web.movie-watch', $movie->id) }}"  class="red" class="btn btn-primary btn-lg"><h2>Xem phim 111</h2></a>
                             @else
                                 <a href="{{ route('web.movie-buy', $movie->id) }}" class="btn btn-success btn-lg" onclick="event.preventDefault();
    document.getElementById('movie-buy-form-{{$movie->id}}').submit();"><h2>Mua phim ({{number_format($movie->price)}} VNĐ)</h2></a>

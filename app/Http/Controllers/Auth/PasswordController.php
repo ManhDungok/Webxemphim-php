@@ -15,7 +15,9 @@ class PasswordController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
+        //Phương thức validateWithBag() được sử dụng để xác thực dữ liệu từ request. 
         $validated = $request->validateWithBag('updatePassword', [
+            //mk dc cung cấp phải khớp vs mk hiện tại
             'current_password' => ['required', 'current_password'],
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);

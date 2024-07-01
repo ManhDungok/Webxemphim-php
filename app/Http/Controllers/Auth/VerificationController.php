@@ -18,6 +18,7 @@ class VerificationController extends Controller
     |
     */
 
+    //xác mình email
     use VerifiesEmails;
 
     /**

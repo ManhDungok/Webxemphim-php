@@ -15,7 +15,7 @@ use Illuminate\View\View;
 class NewPasswordController extends Controller
 {
     /**
-     * Display the password reset view.
+     * Hiển thị chế độ view đặt lại mật khẩu.
      */
     public function create(Request $request): View
     {
@@ -23,39 +23,42 @@ class NewPasswordController extends Controller
     }
 
     /**
-     * Handle an incoming new password request.
+     * Xử lý yêu cầu mật khẩu mới đến.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'token' => ['required'],
+            'token' => ['required'], //Yêu cầu trường 'token' phải tồn tại và không được để trống.
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
+        //Thiết lập lại mk ng dùng, nếu k trả về lỗi
         $status = Password::reset(
+            // $request chỉ lấy các trường 'email', 'password', 'password_confirmation', 'token' từ request
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
+                //thay đổi và lưu lại mật khẩu mới của người dùng.
                 $user->forceFill([
                     'password' => Hash::make($request->password),
+                    //Tạo một token ngẫu nhiên cho remember_token để duy trì phiên đăng nhập.
                     'remember_token' => Str::random(60),
                 ])->save();
 
+                //Phát ra thông báo mkhau đã dc reset thành công
                 event(new PasswordReset($user));
             }
         );
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
-        return $status == Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+
+        return $status == Password::PASSWORD_RESET //quá trình reset mật khẩu đã thành công.
+            //người dùng sẽ được chuyển hướng đến trang login 
+            ? redirect()->route('login')->with('status', __($status))
+            //nếu quá trình reset mật khẩu không thành công),user sẽ được chuyển hướng trở lại trang trước đó 
+            : back()->withInput($request->only('email'))
+            //Hiển thị thông báo lỗi
+            ->withErrors(['email' => __($status)]);
     }
 }

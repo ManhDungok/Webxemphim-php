@@ -35,7 +35,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Cập nhật thông tin hồ sơ của người dùng.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -51,20 +51,23 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * xử lý việc xóa tài khoản người dùng sau khi họ đã xác nhận bằng mật khẩu hiện tại
      */
     public function destroy(Request $request): RedirectResponse
     {
+        //yêu cầu trường password phải được cung cấp và phải trùng khớp với mkhẩu hiện tại của user (current_password).
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);
 
+        //thông tin người dùng từ request và tiến hành đăng xuất người dùng khỏi hệ thống.
         $user = $request->user();
-
         Auth::logout();
 
+        //Thực hiện xóa tài khoản người dùng từ cơ sở dữ liệu.
         $user->delete();
 
+        //Huỷ phiên đăng nhập hiện tại và tái tạo mã thông báo phiên (session token)
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
